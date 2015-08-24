@@ -1,0 +1,50 @@
+<% if @ticket.errors.any? %>
+  <% if alert %>
+    <div class="alert alert-danger" role="alert">
+      <a href="#" class="alert-link"><%= alert %></a>
+      <ul>
+        <% @ticket.errors.full_messages.each do |msg| %>
+         <li><%= msg %>
+       <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
+<%= form_for @ticket, html: {:class => 'form-horizontal'} do |f| %>
+ <%# If you do not pass any option for f.submit it will:
+   1. If @question is not persisted it will make the button label "Create
+      [object Class]"
+   2. If @question is persisted it will make the button label "Update
+      [object Class]"
+    %>
+    <div class="form-group">
+      <%= f.label :name, class: 'col-lg-2 control-label' %>
+      <div class="col-lg-10">
+        <%= f.text_field :name %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :email, class: 'col-lg-2 control-label' %>
+      <div class="col-lg-10">
+        <%= f.text_field :email %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :department, class: 'col-lg-2 control-label' %>
+      <div class="col-lg-10">
+        <%= radio_button("sup_request", "department", "Sales", :checked => @ticket.department == 'Sales') %>
+        Sales &nbsp;
+        <%= radio_button("sup_request", "department", "Marketing", :checked => @ticket.department == 'Marketing') %>
+        Markting&nbsp;
+        <%= radio_button("sup_request", "department", "Technical Support", :checked => @ticket.department == 'Technical Support') %>
+        Technical Support
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :message, class: 'col-lg-2 control-label' %>
+      <div class="col-lg-10">
+        <%= f.text_area :message %>
+      </div>
+    </div>
+ <%= f.submit%>
+<% end %>

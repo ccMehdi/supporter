@@ -1,0 +1,29 @@
+<h1>All submitted support requests</h1>
+<table class="table">
+<tr>
+  <th>name</th>
+  <th>Email</th>
+  <th>Department</th>
+  <th>Message</th>
+  <th>Actions</th>
+</tr>
+  <% @ticket.each do |q| %>
+    <tr>
+      <td><%=q.name %></td>
+      <td><%=mail_to q.email %></td>
+      <td><%=q.department %></td>
+      <td><%=q.message %></td>
+      <td>
+        <%= link_to "Edit", edit_sup_request_path(q), :class => "btn btn-warning"  %>
+        <%= link_to "Delete", sup_request_path(q), method: :delete, :class => "btn btn-danger"  %>
+        <% if q.is_done == "0" %>
+          <%= link_to "Done", sup_request_done_path(q), :class => "btn btn-success" %>
+        <% else %>
+          <a href="#" class="btn btn-default">Is Done</a>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<%= paginate @ticket %>
+<%= page_entries_info @ticket %>
